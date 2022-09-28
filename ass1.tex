@@ -1,0 +1,606 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper,top=0cm, margin=0.85in]{geometry}
+
+%for math
+\usepackage{amsmath, amssymb, amsfonts} %standard
+\usepackage{youngtab} % makes squares for math diagrams
+%-----------------------------------------------------------           
+
+%\usepackage{sectsty}
+%for lists and numbers
+\usepackage{enumitem}
+%-----------------------------------------------------------
+
+% Doc setting
+\usepackage[english]{babel} % Replace `english' with e.g. `spanish' to change the document language
+\usepackage{textcmds} %more symbols
+\usepackage{fontspec} %more fonts
+\usepackage{setspace} %to set spacing bw words and lines
+\usepackage{changepage}
+\setlength\parindent{0pt}
+
+%footer
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\fancyhf{} % sets both header and footer to nothing
+\renewcommand{\headrulewidth}{0pt} %remove headerline
+
+\fancyfoot[RE,RO]{\thepage}
+\fancyfoot[LE,LO]{\emph{CS-1216}}
+\pagestyle{fancy}
+%-----------------------------------------------------------
+
+%for pictures and graphs
+\usepackage{graphicx} %add image
+\usepackage{adjustbox}
+
+\usepackage{pgfplots} %for graphing plotting
+\pgfplotsset{compat=1.18, width=10cm}
+%-----------------------------------------------------------
+
+%for code
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{fancyvrb} %for coding blocks
+%\usepackage{algorithm}
+%\usepackage{algpseudocode} %for pseudocode
+%\usepackage{algorithm, algpseudocode}
+\usepackage[linesnumbered]{algorithm2e}
+\usepackage{algorithm2e}
+
+\setmonofont[Scale=MatchLowercase]{[SFMono-Regular.ttf]}
+%\usepackage{lstfiracode} %firacode
+\usepackage[framemethod=tikz]{mdframed} %adding background to lstlisting
+\usepackage[ruled,vlined,boxed]{algorithm2e} %for pseudocode lines
+
+
+
+%for colors and links
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage[many]{tcolorbox}  % for colored boxes
+\usepackage{color} % to get colors
+\usepackage{xcolor} %more colors options and flexibility
+
+
+%-----------------------------------------------------------------------------
+
+
+%CUSOMIZATIONS
+
+% my colors
+%dracula
+\definecolor{background}{rgb}{0.16,0.16,0.21}
+\definecolor{codegreen}{rgb}{0.24,0.68,0.65}
+\definecolor{codepurple}{rgb}{0.51,0.31,0.87}
+\definecolor{codered}{rgb}{0.81,0.13,0.18}
+\definecolor{codebluegray}{rgb}{0.02,0.31,0.68}
+
+\definecolor{comment}{rgb}{0.67,0.74,0.79}
+\definecolor{textcolor}{rgb}{0.22,0.22,0.22}
+
+%style for coding
+\lstdefinestyle{python}{
+    language=python,
+    backgroundcolor=\color{white},   
+    commentstyle={\color{comment}},
+    keywordstyle={\color{codepurple}},
+    stringstyle={\color{codegreen}},
+    basicstyle={\ttfamily\color{textcolor}},
+    keywordstyle = [2]{\color{codered}},
+    keywordstyle = [3]{\color{codebluegray}},
+    keywordstyle = [4]{\color{teal}},
+    otherkeywords = {<, >, +, -, =, *, \[, \], &&, ||, format, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, ;},
+    morekeywords = [4]{+, -, *, /, =, <, >, format},
+    morekeywords = [3]{\[, \],  1, 2, 3, 4, 5, 6, 7, 8, 9, 0, ;},
+    %
+    breakatwhitespace=false, 
+    frame=shadowbox,
+    rulecolor=\color{textcolor},
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,
+    numbersep=15pt, %distance between code and numbers
+    numberstyle=\scriptsize\ttfamily\color{comment},
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    xleftmargin=4.3em, %margin bw left page and frame
+    framexleftmargin=3.8em, %margin bw text and frame
+    %xleftmargin=3.4em,
+    framexrightmargin=-0.5em,
+    tabsize=2,
+    aboveskip=1.5em,
+    belowskip=0.5em,
+    framextopmargin=9pt,
+    framexbottommargin=9pt,
+    frameshape={RYR}{Y}{Y}{RYR}
+}
+
+\lstdefinestyle{c}{
+    language=c,
+    backgroundcolor=\color{white},   
+    commentstyle={\color{comment}},
+    keywordstyle={\color{codepurple}},
+    stringstyle={\color{codegreen}},
+    basicstyle={\ttfamily\color{textcolor}},
+    keywordstyle = [2]{\color{codered}},
+    keywordstyle = [3]{\color{codebluegray}},
+    keywordstyle = [4]{\color{teal}},
+    otherkeywords = {<, >, +, -, =, *, \[, \], &&, ||, stdio.h, stdlib.h, 1, 2, 3, 4, 5, 6,7, 8, 9, 0, ;},
+    morekeywords = [4]{+, -, *, /, =, <, >, stdio.h, stdlib.h},
+    morekeywords = [3]{\[, \],  1, 2, 3, 4, 5, 6, 7, 8, 9, 0, ;},
+    morekeywords = [2]{&&, ||},
+    %
+    breakatwhitespace=false, 
+    frame=shadowbox,
+    rulecolor=\color{textcolor},
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=15pt, %distance between code and numbers
+    numberstyle=\scriptsize\ttfamily\color{comment},
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    xleftmargin=4.3em, %margin bw left page and frame
+    framexleftmargin=3.8em, %margin bw text and frame
+    %xleftmargin=3.4em,
+    framexrightmargin=-0.5em,
+    tabsize=2,
+    aboveskip=1.5em,
+    belowskip=0.5em,
+    framextopmargin=9pt,
+    framexbottommargin=9pt,
+    frameshape={RYR}{Y}{Y}{RYR}
+}
+
+%-----------------------------------------------------------------------------
+%custom commands
+
+%code
+\newcommand{\problem}[1]{\begin{adjustwidth}{0.1px}\noindent \framebox[1.2\width]{\large Problem #1}\end{adjustwidth} \bigskip\\}
+\newcommand{\codecap}[2]{{\vspace{4px}{\emph{#1}}} \hfill \href{#2}{Link to the code\ }\vspace{25px}}
+\newcommand{\code}[1]{{\texttt{#1}}}
+
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+
+%math
+\newcommand{\bigo}[1]{$O(#1)$ }
+\newcommand{\thetan}[1]{$\theta(#1)$}
+\newcommand{\vector}[1]{$\overrightarrow{#1}$}
+
+%display
+\newcommand{\link}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+\newcommand{\inlink}[1]{\underline{\emph{\link[black]{#1}{#1}}}}
+
+
+%header
+\newcommand{\lesgo}[5]{
+\begin{large}
+\emph{#1}\smallskip \\
+\textbf{Shubhro Gupta} \hfill Week #2\smallskip \\
+Professor #3 \hfill Due #4\\
+\end{large} \medskip \\
+{\emph{Collaborators: #5}}\\
+\hrule
+\vspace{50px}
+\\
+}
+
+\newcommand\dunderline[3][-1pt]{{%
+  \sbox0{#3}%
+  \ooalign{\copy0\cr\rule[\dimexpr#1-#2\relax]{\wd0}{#2}}}}
+
+%new section
+\newcommand{\asec}[1]{{\vspace{20px}\large\dunderline[-3px]{1px}{\textbf{#1}}} \\}
+
+
+
+
+%-----------------------------------------------------------------------------
+%title
+\usepackage{algpseudocode}
+\begin{document}
+
+\lesgo{CS1216 - Monsoon 2022}{1}{Manu Awasthi}{Friday, September 23, 2022}{none}
+
+\problem{1}
+The clock of a processor runs at 800 MHz. The following table provides the instruction distributions for various types of instructions for Benchmark A, as well as the number of cycles one instruction of each type takes, for the different classes of instructions. Assume that the processor only executes one instruction at a time.
+\\
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Instruction type & Frequency of instructions & Cycles per instruction\\
+\hline
+Loads and stores & 20\% & 8\\ 
+Arithmetic & 40\% & 2\\ 
+Branch & 40\% & 2\\
+\hline
+\end{tabular}
+\end{center}
+\\
+\begin{enumerate}[label=(\Alph*)]
+\item Calculate the average CPI for Benchmark A.
+\item Suppose we design a new compiler, which compiles Benchmark A such that the number of  loads and stores in the new version of A is halved, while the number of the rest of the instructions remain unchanged. What will be the new CPI of A?
+\end{enumerate}
+\bigskip
+\\
+\textbf{Solution}\\
+Clock speed = 800 MHz\\
+\begin{enumerate}[label=(\Alph*)]
+    \item 
+    \begin{flalign*}
+&\begin{aligned}
+\text{CPI}_{avg} & = \frac{\text{Total cycles}}{\text{Total instructions}}\\
+\text{CPI}_{avg} & = \frac{(20 \times 8) + (40 \times 2) + (40 \times 2) }{100} \\
+& = \frac{160 + 80 + 80}{100}\\
+& = \frac{320}{100}\\
+& = 3.2
+\end{aligned}&&
+\end{flalign*}
+Therefore the CPI$_{avg}$ is \textbf{3.2}.
+
+\item 
+Since the no. of instructions for loads and stores gets reduced from 20\% to 10\%, therefore the total number of instructions gets reduced from 100 to $10 + 40 + 40 =$ 90.
+    \begin{flalign*}
+&\begin{aligned}
+\text{CPI}_{avg} & = \frac{\text{Total cycles}}{\text{Total instructions}}\\
+\text{CPI}_{avg} & = \frac{(10 \times 8) + (40 \times 2) + (40 \times 2) }{90} \\
+& = \frac{80 + 80 + 80}{90}\\
+& = \frac{240}{90}\\
+& = 2.667
+\end{aligned}&&
+\end{flalign*}
+Therefore the CPI$_{avg}$ is \textbf{2.667}.
+
+
+\end{enumerate}
+
+
+\newpage
+\problem{2}
+For a given program from a benchmark suite, \code{Processor A} has a clock cycle time of 100 ps. and a CPI of 2.5. \code{Processor B} has a clock cycle time of 150 ps. and a CPI of 1.8.  Which machine is faster for this program, and by how much? Report your results as a ratio.
+\bigskip\\
+\textbf{Solution}\\
+\emph{Assuming} the number of instructions is the same for both CPU$_A$ = CPU$_B$ = $10^{10}$.\bigskip
+\\
+Clock cycle time$_A$ = 100 ps = $10^{-10}$ s\\
+CPI$_A$ = 2.5\\
+\vspace*{-\baselineskip}
+\begin{flalign*}
+&\begin{aligned}
+\text{CPU}_A \text{ Execution time} & = \text{Clock cycle time} \times \text{CPI}_{avg} \times \text{no. of instructions}\\
+& = 10^{-10} \times 2.5 \times 10^{10}\\
+& = 2.5 \text{ seconds}
+\end{aligned}&&
+\end{flalign*}
+\bigskip
+\\
+Clock cycle time$_B$ = 150 ps = $1.5 \times 10^{-10}$ s\\
+CPI$_B$ = 1.8\\
+\vspace*{-\baselineskip}
+\begin{flalign*}
+&\begin{aligned}
+\text{CPU}_B \text{ Execution time} & = \text{Clock cycle time} \times \text{CPI}_{avg} \times \text{no. of instructions}\\
+& = 1.5 \times 10^{-10} \times 1.8 \times 10^{10}\\
+& = 2.7 \text{ seconds}
+\end{aligned}&&
+\end{flalign*}
+\bigskip
+\\
+Since CPU$_A$ takes \textbf{0.2 seconds fewer} for the same amount of instructions compared to CPU$_B$, \\ therefore CPU$_A$ is $\frac{CPU_A}{CPU_B} = \frac{2.7}{2.5} = \mathbf{1.08}$ \textbf{times} as fast as CPU$_B$.
+
+\newpage
+\problem{3}
+We have designed a new processor that runs at 1500 million cycles per second. What is the frequency of the processor in GHz? What is its clock cycle time?
+\medskip \\
+If a processor has a frequency of 6 GHz, what is the clock cycle time of this processor? Show your work.\bigskip \\
+\textbf{Solution}\\
+$1.5 \times 10^{9}$ cycles take 1 second, $\therefore$ 1 cycle takes $\frac{1}{1.5 \times 10^{9}} = 0.67 \times 10^{-9}$ seconds.\\
+Clock cycle time = 6.67 $\times 10^{-10}$ seconds \Rightarrow \ 0.667 nanoseconds.
+\medskip
+\\
+\begin{flalign*}
+&\begin{aligned}
+\text{Clock Speed} & = \frac{1}{\text{Clock cycle time}} \text{ cycles / second}\\
+& = \frac{1}{6.7 \times 10^{-10}} \text{ cycles / second}\\
+& = 1.5 \times 10^{9} \text{ cycles / second}\\
+& = 1.5 \text{ GHz}
+\end{aligned}&&
+\end{flalign*}
+Therefore the frequency of the processor is \textbf{1.5 GHz}, and the clock cycle time is \textbf{0.667 nanoseconds}.
+\vspace{1.5cm}
+\\
+\noindent Clock speed = 6 GHz\\
+If $6 \times 10^9$ cycles are completed in 1 second, 
+then 1 cycle is completed in $\frac{1}{6 \times 10^9} = 0.167 \times 10^{-9}$ seconds. 
+\begin{flalign*}
+&\begin{aligned}
+\text{Clock cycle time} & = \frac{1}{\text{Clock speed}} \text{ seconds} \\
+& = \frac{1}{6 \times 10^{9}} \text{ seconds}\\
+& = 0.167 \times 10^{-9} \text{ seconds}\\
+& = 0.167 \text{ nanoseconds}
+\end{aligned}&&
+\end{flalign*}
+Therefore a processor with 6 Ghz Clock speed will have a clock cycle time of  \textbf{0.167 nanoseconds}.
+
+
+
+
+\newpage
+\problem{4}
+A Program X takes 9 seconds to complete on an Intel processor. The same program takes 12 seconds to complete on a RISC-V processor.
+\begin{enumerate}[label=(\Alph*)]
+    \item 
+What is the speedup of the Intel processor over the RISC-V one? 
+\item
+What is the performance improvement of the Intel processor over the RISC-V one?
+\end{enumerate}
+\bigskip\\
+\textbf{Solution}\\
+CPU$_{intel}$ Execution time = 9 seconds\\
+CPU$_{RISC}$ Execution time = 12 seconds
+\begin{enumerate}[label=(\Alph*)]
+    \item 
+        \begin{flalign*}
+        &\begin{aligned}
+        \text{Speed up} & = \frac{\text{perf}_{RISC}}{\text{perf}_{intel}}\\
+        & = \frac{12}{9}\\
+        & = 1.334
+        \end{aligned}&&
+        \end{flalign*}
+    Therefore the speed up of Intel over RISC is \textbf{1.334}.
+\item
+\begin{flalign*}
+        &\begin{aligned}
+        \text{Performance improvement} & = \frac{\text{perf}_{RISC} - \text{perf}_{intel}}{\text{perf}_{RISC}}\\
+        & = \frac{12 - 9}{12}\\
+        & = \frac{3}{12}\\ & = \frac{1}{4}\\
+        & = 25\%
+        \end{aligned}&&
+        \end{flalign*}
+Therefore the time reduction of Intel over RISC is \textbf{25\%}. Or the execution time increase of RISC over intel is $\frac{12 - 9}{9} = \frac{3}{9} = \frac{1}{3}=$\textbf{33\%}.
+\end{enumerate}
+
+
+\newpage
+\problem{5}
+\code{Program A} runs on processors P and Q with clock frequencies 2 GHz and 4.5 GHz respectively. Processors P and Q have a CPI of 1.5 each. Assuming that Program A is broken down into 9 billion instructions on each processor, calculate the performance improvement of \code{Processor Q} over \code{Processor P}.
+\bigskip \\
+\textbf{Solution}\\
+Clock speed$_{P} = 2$ GHz\\
+Clock speed$_{Q} = 4.5$ GHz\\
+CPI$_{P}$ = CPI$_{Q} = 1.5$\\
+No. of instructions = 9,000,000,000 = $9 \times 10^9$
+
+\bigskip
+\\
+\begin{flalign*}
+&\begin{aligned}
+\text{CPU}_{P} \text{ Execution time} & = \frac{1}{\text{Clock speed}} \times \text{no. of instructions} \times \text{CPI}_{avg}\\
+& = \frac{1}{2 \times 10^9} \times 9 \times 10^9 \times 1.5\\
+& = 0.5 \times 9 \times 1.5\\
+& = 6.75 \text{ seconds}
+\end{aligned}&&
+\end{flalign*}
+
+\begin{flalign*}
+&\begin{aligned}
+\text{CPU}_{Q} \text{ Execution time} & = \frac{1}{\text{Clock speed}} \times \text{no. of instructions} \times \text{CPI}_{avg}\\
+& = \frac{1}{4.5 \times 10^9} \times 9 \times 10^9 \times 1.5\\
+& = 0.223 \times 9 \times 1.5\\
+& = 3.0105 \Rightarrow \ \sim3\text{ seconds}
+\end{aligned}&&
+\end{flalign*}
+
+\begin{flalign*}
+&\begin{aligned}
+\text{Performance improvement} & = \frac{\text{perf}_{P} - \text{perf}_{Q}}{\text{perf}_{P}}\\
+& = \frac{6.75 - 3}{6.75}\\
+& = \frac{3.75}{6.75}\\
+& = 0.5556\\
+& = 56\%
+\end{aligned}&&
+\end{flalign*}
+Therefore the time reduction of CPU$_Q$ over CPU$_P$ is \textbf{56\%}.
+
+
+
+
+
+\newpage
+\problem{6}
+\code{MyAwesomeProcessor™} had a power rating of 120 Watts. Due to the microarchitectural enhancements that I made to the processor, I could reduce the power rating to 100 Watts. In the process of carrying out these optimizations, I had to reduce the frequency of the processor from 3.6 GHz to 3 GHz. Also during this process, due to features added on the chip, the execution time of Program A increased from 20 seconds to 22 seconds. If the energy consumption for Program A is my primary metric, are these microarchitectural enhancements worthwhile? Explain briefly.
+\bigskip \\
+\textbf{Solution}\\
+Power$_{old}$ \ = 120 W \Rightarrow \ 120 J/s\\
+Power$_{new}$ = 100 W \Rightarrow \ 100 J/s\\
+Clock speed$_{old}$ = 3.6 GHz\\
+Clock speed$_{new}$ = 3 GHz\\
+CPU$_{old}$ Execution time for program A = 20 seconds\\
+CPU$_{new}$ Execution time for program A = 22 seconds
+\\
+\begin{flalign*}
+&\begin{aligned}
+\text{Energy consumed}_{old} & = \text{Power}_{old} \times \text{Time}_{old}\\
+& = 120 \times 20\\
+& = 2400 \text{ Joules}
+\end{aligned}&&
+\end{flalign*}
+
+\begin{flalign*}
+&\begin{aligned}
+\text{Energy consumed}_{new} & = \text{Power}_{new} \times \text{Time}_{new}\\
+& = 100 \times 22\\
+& = 2200 \text{ Joules}
+\end{aligned}&&
+\end{flalign*}
+\\
+Since \code{MyAwesomeProcessor}\textsuperscript{\code{TM}} takes power$_{new} - $ power$_{old} = 2400 - 2200 =$ \textbf{200 Joules less} compared to the older version, therefore the micro-architectural enhancements are worthwhile \textit{(in my opinion)}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\problem{7}
+My rudimentary processor consists of 4 circuits, an integer adder,a floating point adder, a multiplier and a divider. These units take 850 ps, 1200 ps, 2800 ps and 3000 ps, respectively. The processor is functioning under the constraint that it has to finish an instruction every cycle, irrespective of the type of instruction, and that the units receive their inputs only at the rising edge of the clock.
+\begin{enumerate}[label=(\Alph*)]
+    \item 
+Which unit would decide the frequency of the processor?
+\item
+What will the frequency of the processor be?
+\end{enumerate}
+\bigskip\\
+\textbf{Solution}\\
+No. of circuits = 4\\
+\hspace*{1.5em} 1) Integer adder = 850 ps\\
+\hspace*{1.5em} 2) Floating point adder = 1200 ps\\
+\hspace*{1.5em} 3) Multiplier = 2800 ps\\
+\hspace*{1.5em} 4) Divider = 3000 ps
+\\
+\begin{enumerate}[label=(\Alph*)]
+    \item Since the frequency of the processor should be decided by function it takes the most amount of time to complete \textit{(as there is a constraint that the processor has to finish an instruction every cycle, irrespective of the type of instruction)}, therefore the \textbf{Divider function} would decide the frequency of the processor.
+    \item 
+    \begin{flalign*}
+&\begin{aligned}
+\text{Clock speed} & = \frac{1}{\text{Clock cycle time}} \text{ cycles / second}\\
+& = \frac{1}{3000 \times 10^{-12}} \text{ cycles / second}\\
+& = \frac{1}{3 \times 10^{-9}} \text{ cycles / second}\\
+& = 0.334 \text{ Ghz}
+\Rightarrow {334\text{ MHz}}
+\end{aligned}&&
+\end{flalign*}
+Therefore the frequency of the processor is \textbf{334 Megahertz}.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\problem{8}
+My Intel processor has 4 cores, each running at 1 GHz. A single instance of a program, Y, can run on any of the cores in 20 seconds, and the processor is fully capable of running multiple copies of the same program in parallel on each core, without slowing down any of the individual instances. I have another processor from AMD, which has only a single core, but is running at 4 GHz. As a result, program Y can finish on this core in 3 seconds. If I was to pick a processor so as to optimize the latency of a single instance of program Y, which processor should I pick? My friend, who is in charge of selecting processors for the datacenter servers, wants to pick a processor to optimize for system throughput. In both our cases, when measuring throughput, the unit of work is a batch of 4 instances of Program Y. Which processor should my friend pick (and why)? Explain your answer in both cases by providing quantitative arguments. Show your work.
+\bigskip \\
+\textbf{Solution}\\
+CPU$_{intel}$ cores = 4\\
+CPU$_{intel}$ clock speed = 1 GHz\\
+CPU$_{intel}$ latency = 20 seconds\\
+\vspace*{-0.7cm}
+\begin{flalign*}
+&\begin{aligned}
+\text{CPU}_{intel} \text{ throughput} & = 4 \text{ program$_Y$ per 20 seconds}\\
+& = \frac{4}{20} \text{ program$_Y$ per second}\\
+& = \frac{1}{5} \text{ program$_Y$ per second}
+\Rightarrow \text{ 1 program$_Y$ in 5 seconds}
+\end{aligned}&&
+\end{flalign*}
+
+\bigskip
+\\
+CPU$_{AMD}$ cores = 1\\
+CPU$_{AMD}$ clock speed = 4 GHz\\
+CPU$_{AMD}$ latency = 3 seconds\\
+\vspace*{-0.7cm}
+\begin{flalign*}
+&\begin{aligned}
+\text{CPU}_{AMD} \text{ throughput} & = 1 \text{ program$_Y$ in 3 seconds}\\
+& = \frac{1}{3} \text{ program$_Y$ per second}
+\Rightarrow \text{ 1 program$_Y$ in 3 seconds}
+\end{aligned}&&
+\end{flalign*}
+\bigskip
+\\
+Since for a single instance of the program Y, latency$_{intel}$ > latency$_{AMD}$, i.e., AMD will take $20-3 = $ 17 seconds fewer to run a single instance, therefore I would go with the \textbf{AMD Processor}.
+\bigskip
+\\
+Since for 4 instances of the program Y, throughput$_{AMD}$ > throughput$_{intel}$, i.e., it'll take $4 \times 3 = $ 12 seconds for CPU$_{AMD}$ while $4 \times 5 =$ 20 seconds for CPU$_{intel}$, therefore I would recommend my friend to go with the \textbf{AMD Processor} too. 
+
+
+
+
+\newpage
+\problem{9}
+Assume that I have designed a processor with 4 cores. The table below depicts the completion times and CPIs of each program. Assume that each program can be individually run on each core, without interference from other cores. All programs are started on their respective cores at the same time. Provided the information below, what is the combined throughput of the processor for the completion of all four programs? \\
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
+\hline
+Program & Running on Core no. & Frequency of core & Time for completion & CPI\\
+\hline
+A & 1 & 1 GHz & 4 & 2 \\ 
+B & 2 & 1 GHz & 3 & 3 \\ 
+C & 3 & 1 GHz & 8 & 4 \\ 
+D & 4 & 1 GHz & 7 & 1 \\ 
+\hline
+\end{tabular}
+\end{center}
+\\
+\bigskip \\
+\textbf{Solution}\\\
+Let the no. of cycles for the programs = $X$.
+\bigskip
+\\
+No. of cycles = Clock speed \times \ Time\\
+X$_A$ = $(1 \times 10^9) \times 4 \Rightarrow 4 \times 10^9$\\
+X$_B$ = $(1 \times 10^9) \times 3 \Rightarrow 3 \times 10^9$\\
+X$_C$ = $(1 \times 10^9) \times 8 \Rightarrow 8 \times 10^9$\\
+X$_D$ = $(1 \times 10^9) \times 7 \Rightarrow 7 \times 10^9$\bigskip
+\\
+Let the no. of instructions per program = $Y$.\\
+Instructions per program = \frac{\text{No. of cycles}}{\text{CPI}}\\
+Y$_A$ = $2 \times 10^9$\\
+Y$_B$ = $10^9$\\
+Y$_C$ = $2 \times 10^9$\\
+Y$_D$ = $7 \times 10^9$\bigskip
+\\
+Therefore the total no. of instructions = 12 \times $10^9$.\\
+Combined throughput = $\frac{12 \times 10^9}{8}$\\
+\Rightarrow 1.5 \times $10^9$ instructions per second.
+
+
+
+\par\noindent\rule{\textwidth}{0.4pt}
+\bibliographystyle{alpha}
+\bibliography{sample}
+Slides: Computer Organization and Systems by Prof. Manu Awasthi \\
+
+
+\end{document}
