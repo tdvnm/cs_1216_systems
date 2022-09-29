@@ -1,0 +1,452 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper,top=0cm, margin=0.85in]{geometry}
+
+%for math
+\usepackage{amsmath, amssymb, amsfonts} %standard
+\usepackage{youngtab} % makes squares for math diagrams
+%-----------------------------------------------------------           
+
+%\usepackage{sectsty}
+%for lists and numbers
+\usepackage{enumitem}
+%-----------------------------------------------------------
+
+% Doc setting
+\usepackage[english]{babel} % Replace `english' with e.g. `spanish' to change the document language
+\usepackage{textcmds} %more symbols
+\usepackage{fontspec} %more fonts
+\usepackage{setspace} %to set spacing bw words and lines
+\usepackage{changepage}
+\setlength\parindent{0pt}
+
+\usepackage{multicol} %more columns
+
+
+%footer
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\fancyhf{} % sets both header and footer to nothing
+\renewcommand{\headrulewidth}{0pt} %remove headerline
+
+\fancyfoot[RE,RO]{\thepage}
+\fancyfoot[LE,LO]{\emph{CS-1216}}
+\pagestyle{fancy}
+%-----------------------------------------------------------
+
+%for pictures and graphs
+\usepackage{graphicx} %add image
+\usepackage{adjustbox}
+
+\usepackage{pgfplots} %for graphing plotting
+\pgfplotsset{compat=1.18, width=10cm}
+%-----------------------------------------------------------
+
+%for code
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{fancyvrb} %for coding blocks
+%\usepackage{algorithm}
+%\usepackage{algpseudocode} %for pseudocode
+%\usepackage{algorithm, algpseudocode}
+\usepackage[linesnumbered]{algorithm2e}
+\usepackage{algorithm2e}
+
+\setmonofont[Scale=MatchLowercase]{[SFMono-Regular.ttf]}
+%\usepackage{lstfiracode} %firacode
+\usepackage[framemethod=tikz]{mdframed} %adding background to lstlisting
+\usepackage[ruled,vlined,boxed]{algorithm2e} %for pseudocode lines
+
+
+
+%for colors and links
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage[many]{tcolorbox}  % for colored boxes
+\usepackage{color} % to get colors
+\usepackage{xcolor} %more colors options and flexibility
+
+
+%-----------------------------------------------------------------------------
+
+
+%CUSOMIZATIONS
+
+% my colors
+%dracula
+\definecolor{background}{rgb}{0.16,0.16,0.21}
+\definecolor{codegreen}{rgb}{0.24,0.68,0.65}
+\definecolor{codepurple}{rgb}{0.51,0.31,0.87}
+\definecolor{codered}{rgb}{0.81,0.13,0.18}
+\definecolor{codebluegray}{rgb}{0.02,0.31,0.68}
+
+\definecolor{comment}{rgb}{0.67,0.74,0.79}
+\definecolor{textcolor}{rgb}{0.22,0.22,0.22}
+
+%style for coding
+\lstdefinestyle{python}{
+    language=python,
+    backgroundcolor=\color{white},   
+    commentstyle={\color{comment}},
+    keywordstyle={\color{codepurple}},
+    stringstyle={\color{codegreen}},
+    basicstyle={\ttfamily\color{textcolor}},
+    keywordstyle = [2]{\color{codered}},
+    keywordstyle = [3]{\color{codebluegray}},
+    keywordstyle = [4]{\color{teal}},
+    otherkeywords = {<, >, +, -, =, *, \[, \], &&, ||, format, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, ;},
+    morekeywords = [4]{+, -, *, /, =, <, >, format},
+    morekeywords = [3]{\[, \],  1, 2, 3, 4, 5, 6, 7, 8, 9, 0, ;},
+    %
+    breakatwhitespace=false, 
+    frame=shadowbox,
+    rulecolor=\color{textcolor},
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,
+    numbersep=15pt, %distance between code and numbers
+    numberstyle=\scriptsize\ttfamily\color{comment},
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    xleftmargin=4.3em, %margin bw left page and frame
+    framexleftmargin=3.8em, %margin bw text and frame
+    %xleftmargin=3.4em,
+    framexrightmargin=-0.5em,
+    tabsize=2,
+    aboveskip=1.5em,
+    belowskip=0.5em,
+    framextopmargin=9pt,
+    framexbottommargin=9pt,
+    frameshape={RYR}{Y}{Y}{RYR}
+}
+
+\lstdefinestyle{MIPS}{
+    basicstyle={\ttfamily\color{textcolor}},
+    breakatwhitespace=false, 
+    %frame=shadowbox,
+    %rulecolor=\color{textcolor},
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=15pt, %distance between code and numbers
+    numberstyle=\scriptsize\ttfamily\color{comment},
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    xleftmargin=4.3em, %margin bw left page and frame
+    framexleftmargin=3.8em, %margin bw text and frame
+    %xleftmargin=3.4em,
+    framexrightmargin=-0.5em,
+    tabsize=2,
+    aboveskip=1.5em,
+    belowskip=0.5em,
+    framextopmargin=9pt,
+    framexbottommargin=9pt,
+    frameshape={RYR}{Y}{Y}{RYR}
+}
+
+\lstdefinestyle{c}{
+    language=c,
+    backgroundcolor=\color{white},   
+    commentstyle={\color{comment}},
+    keywordstyle={\color{codepurple}},
+    stringstyle={\color{codegreen}},
+    basicstyle={\ttfamily\color{textcolor}},
+    keywordstyle = [2]{\color{codered}},
+    keywordstyle = [3]{\color{codebluegray}},
+    keywordstyle = [4]{\color{teal}},
+    otherkeywords = {<, >, +, -, =, *, \[, \], &&, ||, stdio.h, stdlib.h, 1, 2, 3, 4, 5, 6,7, 8, 9, 0, ;},
+    morekeywords = [4]{+, -, *, /, =, <, >, stdio.h, stdlib.h},
+    morekeywords = [3]{\[, \],  1, 2, 3, 4, 5, 6, 7, 8, 9, 0, ;},
+    morekeywords = [2]{&&, ||},
+    %
+    breakatwhitespace=false, 
+    frame=shadowbox,
+    rulecolor=\color{textcolor},
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=15pt, %distance between code and numbers
+    numberstyle=\scriptsize\ttfamily\color{comment},
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    xleftmargin=4.3em, %margin bw left page and frame
+    framexleftmargin=3.8em, %margin bw text and frame
+    %xleftmargin=3.4em,
+    framexrightmargin=-0.5em,
+    tabsize=2,
+    aboveskip=1.5em,
+    belowskip=0.5em,
+    framextopmargin=9pt,
+    framexbottommargin=9pt,
+    frameshape={RYR}{Y}{Y}{RYR}
+}
+
+%-----------------------------------------------------------------------------
+%custom commands
+
+%code
+\newcommand{\problem}[1]{\begin{adjustwidth}{0.1px}\noindent \framebox[1.2\width]{\large Problem #1}\end{adjustwidth} \bigskip\\}
+\newcommand{\codecap}[2]{{\vspace{4px}{\emph{#1}}} \hfill \href{#2}{Link to the code\ }\vspace{25px}}
+\newcommand{\code}[1]{{\texttt{#1}}}
+
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+
+%math
+\newcommand{\bigo}[1]{$O(#1)$ }
+\newcommand{\thetan}[1]{$\theta(#1)$}
+\newcommand{\vector}[1]{$\overrightarrow{#1}$}
+
+%display
+\newcommand{\link}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+\newcommand{\inlink}[1]{\underline{\emph{\link[black]{#1}{#1}}}}
+
+
+%header
+\newcommand{\lesgo}[5]{
+\begin{large}
+\emph{#1}\smallskip \\
+\textbf{Shubhro Gupta} \hfill Week #2\smallskip \\
+Professor #3 \hfill Due #4\\
+\end{large} \medskip \\
+{\emph{Collaborators: #5}}\\
+\hrule
+\vspace{50px}
+\\
+}
+
+\newcommand\dunderline[3][-1pt]{{%
+  \sbox0{#3}%
+  \ooalign{\copy0\cr\rule[\dimexpr#1-#2\relax]{\wd0}{#2}}}}
+
+%new section
+\newcommand{\asec}[1]{{\vspace{20px}\large\dunderline[-3px]{1px}{\textbf{#1}}} \\}
+
+
+
+
+%-----------------------------------------------------------------------------
+%title
+\usepackage{algpseudocode}
+\begin{document}
+
+\lesgo{CS1216 - Monsoon 2022}{2}{Manu Awasthi}{Friday, September 30, 2022}{none}
+
+\problem{1}
+Annotate the following MIPS instructions to indicate source and destination registers. Also, describe in words (one sentence or less) what the instruction is trying to do.  These are all individual instructions and not a part of a sequence:
+\begin{lstlisting}[style=MIPS]
+addi $t0, $t2, 10
+sw $s2, 16($s5)
+lw $s3, 4($gp)
+jr $ra
+bne $t3, $s0, Else
+\end{lstlisting}
+\bigskip \\
+\textbf{Solution}\\
+
+
+\newpage
+\problem{2}
+Consider the following fragment of C code. This code declares two global variables: an integer variable \code{i}, and an integer array \code{array[]}, which has 40 elements. Then, the code loops over the entire array, doing a simple calculation as shown below. Convert this code to use MIPS assembly instructions that we have covered in class. Assume that you would have been provided a value in the \code{\$gp} register, which would specify the size of the text region of the program. Assume that \code{i} is laid out in memory, before \code{array[]}. Provide comments for each line of code so that it is clear what is happening, is actually intended.
+\begin{lstlisting}[style=c]
+int i, array[40];\\
+main( ) { 
+	for (i=0; i<40; i++) 
+    	array[i] = array[i] + i; 
+} 
+\end{lstlisting}
+\bigskip \\
+\textbf{Solution}\\\
+
+
+
+
+\newpage
+\problem{3}
+There are several different instructions that can be used to change the control flow in a MIPS program. Selecting from \code{j, jal, jr, beq} and \code{bne} which instruction has the greatest range? (In other words, which instruction can be used to go the furthest away relative to where the instruction is located?) Why is it true?
+\bigskip \\
+\textbf{Solution}\\
+
+
+
+
+
+
+\newpage
+\problem{4}
+Convert the following fragment of C code into MIPS assembly.  Assume the only instructions available for you to use are \code{add, addi, sub, lw, sw, sll, srl, j, beq} and \code{bne}. Also assume that variables \code{i} and \code{j} are stored in \code{\$s2} and \code{\$s5}, respectively.
+\begin{lstlisting}[style=c]
+if ( i < j ) 
+    j = j + (16 * i);
+else
+   i = i - (64 * j); 
+\end{lstlisting}
+\bigskip \\
+\textbf{Solution}\\
+
+
+
+
+
+
+
+\newpage
+\problem{5}
+Assume that we would like to expand the MIPS register file to 128 registers and expand the instruction set to contain four times as many instructions than we have currently.
+\begin{enumerate}
+    \item How would this affect the size of each of the bit fields in the R-type instructions?
+    \item How would this affect the size of each of the bit fields in the I-type instructions? 
+\end{enumerate}
+State clearly any additional assumptions that you might make.
+
+\bigskip \\
+\textbf{Solution}\\
+
+
+
+
+
+
+
+
+\newpage
+\problem{6}
+In MIPS assembly language, there exists an instruction called \code{seq}. It compares the contents of two source registers and sets the destination register to 1 if they are equal, else sets the destination register to 0. \\
+Eg. \code{seq \$v0, \$t1, \$t2}
+\\
+Write a short sequence of any valid MIPS assembly instructions that we have covered till now (except \code{seq} itself) to compare the contents of the source registers \code{\$t1} and \code{\$t2} and set the destination register \code{\$v0} to \code{1} if they are equal, else 0.
+
+
+\bigskip \\
+\textbf{Solution}\\
+
+
+
+
+
+
+
+
+\newpage
+\problem{7}
+Observe the following piece of MIPS assembly code. Boil this down to \textbf{one line} of C. Additionally, put in the comments for each line to show what is being done in each line. You will have to look up the definition of the mult instruction. It would be helpful to think about the problem in terms of two C variables that are being used.
+\begin{lstlisting}[style=MIPS]
+lw     $t0, 4($gp)      	
+add    $t1, $t0, $zero   	
+addi   $t1, $t1, 3       	
+mul    $t1, $t1, $t0     	
+sw     $t1, 0($gp)
+\end{lstlisting}
+\bigskip \\
+\textbf{Solution}\\
+
+
+
+
+
+
+
+
+\newpage
+\problem{8}
+Use the register and memory values in the tables below for the next questions. Assume a 32-bit architecture. Also assume that each of the following questions (parts a and b) start from the table values.
+\\
+\begin{center}
+
+\begin{tabular}{ |c|c| } 
+\hline
+Register & Value\\
+\hline
+\code{\$s1} & 16\\ 
+\code{\$s2} & 15\\
+\code{\$s3} & 20\\ 
+\code{\$s4} & 24\\ 
+\hline
+\end{tabular}
+\hspace{1cm}
+\begin{tabular}{ |c|c| } 
+\hline
+Memory Address & Value\\
+\hline
+12 & 20\\ 
+16 & 26\\
+20 & 28\\ 
+24 & 32\\ 
+\hline
+\end{tabular}
+\end{center}
+\medskip\\
+\begin{enumerate}[label=(\alph*)]
+    \item Provide the values of registers \code{\$s1} and \code{\$s3} after this instruction is executed:\\
+    \code{lw \$s3, 4(\$s1)}
+
+    \item Provide the values of registers \code{\$s2} and \code{\$s3} after this instruction is executed:\\
+    \code{addi $s2, $s3, 16} 
+\end{enumerate}
+\bigskip \\
+\textbf{Solution}\\
+
+
+
+
+
+
+
+\newpage
+\problem{9}
+Consider a program that declares global integer variables \code{a, b, c[20]}. These variables are allocated starting at a base address of \code{decimal 1000}. All these variables have been initialized to zero. The base address \code{1000} has been placed in \code{\$gp}. The program executes the following assembly instructions:
+\begin{lstlisting}[style=MIPS]
+lw   $s1, 0($gp)
+lw   $s2, 4($gp)
+addi $s1, $s1, 5
+addi $s2, $s2, 9
+sw   $s1, 8($gp)
+sw   $s2, 12($gp)
+add  $s2, $s2, $s1
+sw   $s2, 16($gp)
+\end{lstlisting}
+\begin{enumerate}[label=(\alph*)]
+    \item What are the memory addresses of variables \code{a, b, c[0], c[1], and c[2]}?
+    \item What are the values of variables \code{a, b, c[0], c[1]}, and \code{c[2]} at the end of the program?
+\end{enumerate}
+
+\bigskip \\
+\textbf{Solution}\\
+
+
+
+
+
+
+
+\newpage
+\problem{10}
+Consider the following code fragment in MIPS assembly. In one sentence or less (per line) describe what is happening in each of the following instructions.
+\begin{lstlisting}[style=MIPS]
+addi $sp, $sp, –12 
+sw   $t1, 8($sp) 
+sw   $t0, 4($sp) 
+sw   $s0, 0($sp)
+\end{lstlisting}
+
+\bigskip \\
+\textbf{Solution}\\
+
+
+\par\noindent\rule{\textwidth}{0.4pt}
+\bibliographystyle{alpha}
+\bibliography{sample}
+Slides: Computer Organization and Systems by Prof. Manu Awasthi \\
+
+
+\end{document}
