@@ -31,7 +31,7 @@
 \renewcommand{\headrulewidth}{0pt} %remove headerline
 
 \fancyfoot[RE,RO]{\thepage}
-\fancyfoot[LE,LO]{\emph{CS-1216}}
+\fancyfoot[LE,LO]{\emph{CS1216 – Monsoon 2022 Homework 2 Shubhro Gupta}}
 \pagestyle{fancy}
 %-----------------------------------------------------------
 
@@ -195,7 +195,7 @@
 %custom commands
 
 %code
-\newcommand{\problem}[1]{\begin{adjustwidth}{0.1px}\noindent \framebox[1.2\width]{\large Problem #1}\end{adjustwidth} \bigskip\\}
+\newcommand{\problem}[2]{\begin{adjustwidth}{0.1px}\noindent \framebox[1.2\width]{\large Problem #1}\hfill \emph{#2} \end{adjustwidth} \bigskip\\}
 \newcommand{\codecap}[2]{{\vspace{4px}{\emph{#1}}} \hfill \href{#2}{Link to the code\ }\vspace{25px}}
 \newcommand{\code}[1]{{\texttt{#1}}}
 
@@ -242,21 +242,58 @@ Professor #3 \hfill Due #4\\
 
 \lesgo{CS1216 - Monsoon 2022}{2}{Manu Awasthi}{Friday, September 30, 2022}{none}
 
-\problem{1}
-Annotate the following MIPS instructions to indicate source and destination registers. Also, describe in words (one sentence or less) what the instruction is trying to do.  These are all individual instructions and not a part of a sequence:
-\begin{lstlisting}[style=MIPS]
-addi $t0, $t2, 10
-sw $s2, 16($s5)
-lw $s3, 4($gp)
-jr $ra
-bne $t3, $s0, Else
-\end{lstlisting}
+\problem{1}{20 points}
+Annotate the following MIPS instructions to indicate source and destination registers. Also, describe in words (one sentence or less) what the instruction is trying to do.  
+\\ These are all individual instructions and not a part of a sequence:
+\begin{enumerate}
+    \item 
+    \code{addi \$t0, \$t2, 10}
+    \item 
+    \code{sw \$s2, 16(\$s5)}
+    \item
+    \code{lw \$s3, 4(\$gp)}
+    \item
+    \code{jr \$ra}
+    \item
+    \code{bne \$t3, \$s0, Else}
+\end{enumerate}
 \bigskip \\
-\textbf{Solution}\\
-
+\textbf{Solution}
+\begin{enumerate}
+    \item 
+    \textbf{Source register} \code{\$t2}\\
+    \textbf{Destination register} \code{\$t0}
+        \medskip\\
+    Add value stored in \code{\$t2} and 10 $\rightarrow$ store the value in \code{\$t0}.
+    
+    \item 
+    \textbf{Source register} 16 + memory location stored in \code{\$s5}\\
+    \textbf{Destination register} \code{\$s2}
+        \medskip\\
+    Store the 32 bit word \code{\$s2} in $\rightarrow$ 16 + the memory location in \code{\$s5}.
+    
+    \item 
+    \textbf{Source register} 16 + memory location stored in \code{\$s5}\\
+    \textbf{Destination register} \code{\$s2}
+        \medskip\\
+    Read the 32 bit word at 4 + the memory location stored in \code{\$gp} $\rightarrow$ put it into \code{\$s3}.
+    
+    \item 
+    \textbf{Source register} \code{\$ra}
+        \medskip\\
+    Execute instruction $\rightarrow$ \code{\$ra}.
+    
+    \item 
+    \textbf{Source register} \code{\$t3} and \code{\$s0}\\
+    \textbf{Destination register} \code{Else}
+    \medskip\\
+     If the value of \code{\$t3 != \$t0} $\rightarrow$
+    go to the instruction block \code{Else}.
+    
+\end{enumerate}
 
 \newpage
-\problem{2}
+\problem{2}{15 points}
 Consider the following fragment of C code. This code declares two global variables: an integer variable \code{i}, and an integer array \code{array[]}, which has 40 elements. Then, the code loops over the entire array, doing a simple calculation as shown below. Convert this code to use MIPS assembly instructions that we have covered in class. Assume that you would have been provided a value in the \code{\$gp} register, which would specify the size of the text region of the program. Assume that \code{i} is laid out in memory, before \code{array[]}. Provide comments for each line of code so that it is clear what is happening, is actually intended.
 \begin{lstlisting}[style=c]
 int i, array[40];\\
@@ -266,24 +303,40 @@ main( ) {
 } 
 \end{lstlisting}
 \bigskip \\
-\textbf{Solution}\\\
+\textbf{Solution}\\
+Converted C to MIPS:
+\begin{lstlisting}[style=MIPS]
+addi $s1, $zero, 0   # stores the value 0 in $s1, initiating i
+addi $s2, $gp, 4     # storing the address of array[0] in $s2
+
+forLoop:
+lw $s3, ($s2)        # loads the value of memory location $s2 in $s3
+add $t0, $s3, $s1    # $s3 and $s1 are added in t0
+sw $t0, ($s2)        # stores array[i] + i
+addi $s1, $s1, 1     # add 1 to i
+addi$s2, $s2, 4 -    # add 4 to the value of $s2 -> array [i] + 1
+bne $s1, 40, forLoop # to check if i == 40; if true -> loop again
+\end{lstlisting}
 
 
 
 
 \newpage
-\problem{3}
+\problem{3}{5 points}
 There are several different instructions that can be used to change the control flow in a MIPS program. Selecting from \code{j, jal, jr, beq} and \code{bne} which instruction has the greatest range? (In other words, which instruction can be used to go the furthest away relative to where the instruction is located?) Why is it true?
 \bigskip \\
 \textbf{Solution}\\
-
+\code{jr} can technically leap across the whole stack memory block (32 bit address specification) \emph{(which is typically larger than a text block)}, whereas \code{j, jal, beq}, and \code{bne} are restricted to a text memory block size.
+\\
+\\
+Therefore \code{jr} instruction has the greatest range.
 
 
 
 
 
 \newpage
-\problem{4}
+\problem{4}{20 points}
 Convert the following fragment of C code into MIPS assembly.  Assume the only instructions available for you to use are \code{add, addi, sub, lw, sw, sll, srl, j, beq} and \code{bne}. Also assume that variables \code{i} and \code{j} are stored in \code{\$s2} and \code{\$s5}, respectively.
 \begin{lstlisting}[style=c]
 if ( i < j ) 
@@ -293,7 +346,23 @@ else
 \end{lstlisting}
 \bigskip \\
 \textbf{Solution}\\
+Converted C to MIPS:
+\begin{lstlisting}[style=MIPS]
+addi    $t0, $s2, 0
+addi    $t1, $s5, 0
+subloop: addi $t1, $t1, -1
+addi    $t0, $t0, -1
+bne     $t1, 0, else
+bne     $t0, 0, if
+j subloop
 
+if:     sll $s0, $s2, 4
+add     $s5, $s5, $s0
+
+else:
+sll     $s0, $s5, 6
+sub     $s2, $s2, $s0
+\end{lstlisting}
 
 
 
@@ -301,7 +370,7 @@ else
 
 
 \newpage
-\problem{5}
+\problem{5}{10 points}
 Assume that we would like to expand the MIPS register file to 128 registers and expand the instruction set to contain four times as many instructions than we have currently.
 \begin{enumerate}
     \item How would this affect the size of each of the bit fields in the R-type instructions?
@@ -311,7 +380,11 @@ State clearly any additional assumptions that you might make.
 
 \bigskip \\
 \textbf{Solution}\\
-
+Operation code is allocated 6 bits, both for R and I type instructions; meaning 32 different instructions can be encoded. If the instruction set is quadrupled (32 $\times$ 4 = 128) then:
+\begin{enumerate}
+    \item The source and destinations registers require an additional 7 bits each. A 35 bit word will be required if we assume that the shift amount and the function sizes remain constant.
+    \item 32 + 6 = 38 bit word would be required for I-type instructions.
+\end{enumerate}
 
 
 
@@ -320,26 +393,30 @@ State clearly any additional assumptions that you might make.
 
 
 \newpage
-\problem{6}
+\problem{6}{5 points}
 In MIPS assembly language, there exists an instruction called \code{seq}. It compares the contents of two source registers and sets the destination register to 1 if they are equal, else sets the destination register to 0. \\
 Eg. \code{seq \$v0, \$t1, \$t2}
 \\
-Write a short sequence of any valid MIPS assembly instructions that we have covered till now (except \code{seq} itself) to compare the contents of the source registers \code{\$t1} and \code{\$t2} and set the destination register \code{\$v0} to \code{1} if they are equal, else 0.
+Write a short sequence of any valid MIPS assembly instructions that we have covered till now (except \code{seq} itself) to compare the contents of the source registers \code{\$t1} and \code{\$t2} and set the destination register \code{\$v0} to 1 if they are equal, else 0.
 
 
 \bigskip \\
 \textbf{Solution}\\
-
-
-
+\begin{lstlisting}[style=MIPS]
+beq $s0, $s1, equal
+addi $v0, $zero, 0
+j quit
+equal: addi $v0, $zero, 1
+quit:
+\end{lstlisting}
 
 
 
 
 
 \newpage
-\problem{7}
-Observe the following piece of MIPS assembly code. Boil this down to \textbf{one line} of C. Additionally, put in the comments for each line to show what is being done in each line. You will have to look up the definition of the mult instruction. It would be helpful to think about the problem in terms of two C variables that are being used.
+\problem{7}{10}
+Observe the following piece of MIPS assembly code. Boil this down to \textbf{one line} of C. Additionally, put in the comments for each line to show what is being done in each line. You will have to look up the definition of the \code{mul} instruction. It would be helpful to think about the problem in terms of two C variables that are being used.
 \begin{lstlisting}[style=MIPS]
 lw     $t0, 4($gp)      	
 add    $t1, $t0, $zero   	
@@ -349,16 +426,25 @@ sw     $t1, 0($gp)
 \end{lstlisting}
 \bigskip \\
 \textbf{Solution}\\
+\code{lw     \$t0, 4(\$gp)} $\rightarrow$ stores the value of 4+\code{\$gp} in \code{\$t0}.\\
+\code{add    \$t1, \$t0, \$zero} $\rightarrow$ copies the value of \code{\$t0} to \code{\$t1}.\\
+\code{addi   \$t1, \$t1, 3 } $\rightarrow$ adds 3 to the value of \code{\$t1}. \code{\$t1 = a + 3}, kinda.\\
+\code{mul    \$t1, \$t1, \$t0} $\rightarrow$ multiplies \code{(a+3)} to \code{a}. \code{\$t1 = a*(a+3)}.\\
+\code{sw     \$t1, 0(\$gp)} $\rightarrow$ stores \code{\$t1 = a*(a+a)} in \code{\$gp} location.\\
+\\
+Converted MIPS to C:
+\begin{lstlisting}[style=C]
+int a;
+b = a*(a+3);
 
-
-
+\end{lstlisting}
 
 
 
 
 
 \newpage
-\problem{8}
+\problem{8}{10 points}
 Use the register and memory values in the tables below for the next questions. Assume a 32-bit architecture. Also assume that each of the following questions (parts a and b) start from the table values.
 \\
 \begin{center}
@@ -391,11 +477,14 @@ Memory Address & Value\\
     \code{lw \$s3, 4(\$s1)}
 
     \item Provide the values of registers \code{\$s2} and \code{\$s3} after this instruction is executed:\\
-    \code{addi $s2, $s3, 16} 
+    \code{addi \$s2, \$s3, 16} 
 \end{enumerate}
 \bigskip \\
-\textbf{Solution}\\
-
+\textbf{Solution}
+\begin{enumerate}[label=(\alph*)]
+    \item \code{\$s1} = 15\\ \code{\$s3} = 28
+    \item \code{\$s2} = \code{\$s3} + 16 = 36\\ \code{\$s3} = 20
+\end{enumerate}
 
 
 
@@ -403,7 +492,7 @@ Memory Address & Value\\
 
 
 \newpage
-\problem{9}
+\problem{9}{30 points}
 Consider a program that declares global integer variables \code{a, b, c[20]}. These variables are allocated starting at a base address of \code{decimal 1000}. All these variables have been initialized to zero. The base address \code{1000} has been placed in \code{\$gp}. The program executes the following assembly instructions:
 \begin{lstlisting}[style=MIPS]
 lw   $s1, 0($gp)
@@ -421,16 +510,36 @@ sw   $s2, 16($gp)
 \end{enumerate}
 
 \bigskip \\
-\textbf{Solution}\\
-
-
-
-
+\textbf{Solution}
+\begin{enumerate}[label=(\alph*)]
+    \item Here \code{\$gp} = \code{a} = base address = 1000.\\
+    Memory space allocated for each variable = 4 bytes, therefore the the memory address of the variables declared after \code{\$gp} = $1000 + 4 \times (i - 1)$ where $i = $ order of declaration.\bigskip
+    \\
+    \code{a} = 1000\\
+    \code{b} = 1004\\
+    \code{c[0]} = 1008\\
+    \code{c[1]} = 1012\\
+    \code{c[2]} = 1016
+    
+    \item \bigskip
+    \\
+    \code{a} = \code{b} = 0 \\
+    Line 3 and 4 add 5 and 9 respectively, but since they're never updated in the code, they would remain at the initialised value, i.e. 0.\medskip\\
+    \code{c[0]} = \code{\$s1} = 5\\
+    From line 5, unlike \code{a} and \code{b}, the value for \code{c[0]} is updated in line 5.\medskip\\
+    \code{c[1]} = \code{\$s2} = 9\\
+    Same as \code{c[0]}, but it's line 6.
+    \medskip\\
+    \code{c[2]} = \code{\$s1 + \$s2} = 14\\
+    Values of \code{\$s1} and \code{\$s2} = 5 + 9 = 14 from line 7, which is then stored to \code{\$c[2]} from line 8.
+    
+    
+\end{enumerate}
 
 
 
 \newpage
-\problem{10}
+\problem{10}{5 points}
 Consider the following code fragment in MIPS assembly. In one sentence or less (per line) describe what is happening in each of the following instructions.
 \begin{lstlisting}[style=MIPS]
 addi $sp, $sp, –12 
@@ -441,12 +550,20 @@ sw   $s0, 0($sp)
 
 \bigskip \\
 \textbf{Solution}\\
-
+\code{addi \$sp, \$sp, –12} $\rightarrow$ the value at location \code{\$sp} is equal to \code{\$sp} -12; and then it updates itself in \code{\$sp}.\medskip
+\\
+\code{sw   \$t1, 8(\$sp)} $\rightarrow$ stores the value of \code{\$t1} to location 8 + \code{\$sp}. \medskip
+\\
+\code{sw   \$t0, 4(\$sp)} $\rightarrow$ stores the value of \code{\$t0} to location 4 + \code{\$sp}. \medskip
+\\
+\code{sw   \$t0, 4(\$sp)} $\rightarrow$ stores the value of \code{\$s0} to location \code{\$sp}. \medskip
+\\
 
 \par\noindent\rule{\textwidth}{0.4pt}
 \bibliographystyle{alpha}
 \bibliography{sample}
 Slides: Computer Organization and Systems by Prof. Manu Awasthi \\
+Book: Computer Organization and Design : the hardware/software interface by David A. Patterson and John L. Hennessy
 
 
 \end{document}
